@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,7 +40,7 @@ public class TimeEntryController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<TimeEntry>  delete(@PathVariable("id") long id){
-        TimeEntry entry = repository.delete(id);
-        return new ResponseEntity<TimeEntry>(entry, HttpStatus.NO_CONTENT);
+        repository.delete(id);
+        return new ResponseEntity<TimeEntry>(HttpStatus.NO_CONTENT);
     }
 }

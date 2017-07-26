@@ -9,15 +9,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import javax.sql.DataSource;
+import java.util.TimeZone;
+
 @SpringBootApplication
 public class PalTrackerApplication {
     public static void main(String[] args) {
+        // Make sure the application runs as UTC
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         SpringApplication.run(PalTrackerApplication.class, args);
     }
 
     @Bean
-    public TimeEntryRepository timeEntryRepository() {
-        return new InMemoryTimeEntryRepository();
+    TimeEntryRepository timeEntryRepository(DataSource dataSource) {
+        return new JdbcTimeEntryRepository(dataSource);
     }
 
     @Bean

@@ -13,7 +13,7 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
         return timeEntry;
     }
 
-    public TimeEntry find(long id) {
+    public TimeEntry find(Long id) {
 
         for (TimeEntry item : list) {
             if (item.getId() == id) {
@@ -28,21 +28,17 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
         return this.list;
     }
 
-    public TimeEntry update(long id, TimeEntry timeEntry) {
+    public TimeEntry update(Long id, TimeEntry timeEntry) {
         delete(id);
         timeEntry.setId(id);
         list.add(timeEntry);
         return timeEntry;
     }
 
-    public TimeEntry delete(long id) {
+    public void delete(Long id) {
         TimeEntry entry = find(id);
         if (entry != null) {
             list.remove(entry);
-            return entry;
         }
-
-        return null;
     }
-
 }
