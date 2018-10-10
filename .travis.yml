@@ -4,12 +4,6 @@ notifications:
   email: false
 env:
   - RELEASE_TAG="release-$TRAVIS_BUILD_NUMBER"
-  - CF_API_URL=https://api.sys.evans.pal.pivotal.io
-  - CF_ORG=takuma-watanabe
-  - CF_USERNAME=takuma.watanabe.yf@hitachi-solutions.com
-  - CF_PASSWORD=ffbf6f3p
-  - GITHUB_USERNAME=takuma-watanbe
-  - GITHUB_OAUTH_TOKEN=a1849cf20e0ea33768fc5c2932deebb43e83929e
 if: tag IS blank
 
 
