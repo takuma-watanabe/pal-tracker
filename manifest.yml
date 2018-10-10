@@ -2,7 +2,6 @@
 applications:
 - name: pal-tracker
   path: build/libs/pal-tracker.jar
-  random-route-del: true
   routes:
   - route: pal-tracker-takaoka-watanabe.apps.evans.pal.pivotal.io
   env:
