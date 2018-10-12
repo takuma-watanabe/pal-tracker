@@ -3,23 +3,21 @@ package io.pivotal.pal.tracker;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.actuate.health.Health;
+import test.pivotal.pal.tracker.StubTimeEntryRepository;
 
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 public class TimeEntryHealthIndicatorTest {
-    private TimeEntryRepository mockRepository;
+    private StubTimeEntryRepository stubTimeEntryRepository;
     private TimeEntryHealthIndicator timeEntryHealthIndicator;
 
     @Before
     public void setUp() throws Exception {
-        mockRepository = mock(TimeEntryRepository.class);
-        timeEntryHealthIndicator = new TimeEntryHealthIndicator(mockRepository);
+        stubTimeEntryRepository = new StubTimeEntryRepository();
+        timeEntryHealthIndicator = new TimeEntryHealthIndicator(stubTimeEntryRepository);
     }
 
     @Test
@@ -27,9 +25,7 @@ public class TimeEntryHealthIndicatorTest {
         List<TimeEntry> timeEntries = asList(
                 new TimeEntry(), new TimeEntry(), new TimeEntry(), new TimeEntry(), new TimeEntry()
         );
-        doReturn(timeEntries)
-                .when(mockRepository)
-                .list();
+        stubTimeEntryRepository.setList_returnValue(timeEntries);
 
 
         Health health = timeEntryHealthIndicator.health();
@@ -40,10 +36,10 @@ public class TimeEntryHealthIndicatorTest {
 
     @Test
     public void testHealthIsDown_whenListReturnsLessThanFiveEntries() {
-        List<TimeEntry> timeEntries = Collections.emptyList();
-        doReturn(timeEntries)
-                .when(mockRepository)
-                .list();
+        List<TimeEntry> timeEntries = asList(
+                new TimeEntry(), new TimeEntry(), new TimeEntry(), new TimeEntry()
+        );
+        stubTimeEntryRepository.setList_returnValue(timeEntries);
 
 
         Health health = timeEntryHealthIndicator.health();
